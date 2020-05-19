@@ -1,10 +1,11 @@
 ---
 title: "Emily Rayens Module 5"
+subtitle: "https://github.com/Rayense/Module-5"
 author: "Emily Rayens"
 date: "May 19, 2020"
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: tactile
   html_document: default
   pdf_document: default
 ---
@@ -121,6 +122,7 @@ In closing, we note that we have only scratched the surface of what can be done 
 
 **Exercise. Borrowing from your earlier exercises, prepare an analysis of the WNV or MERS data as a reproducible document using R/Markdown. Compile to a pdf (if your desktop in class is not compiling in PDF compile in HTML.**
 
+## Summary of MERS Analysis from Module 1
 *In conducting a brief summary of the earlier analysis, we need to begin by recoding to simplify the outcomes and calculating the infectious period and coverting it into days.* 
 ```{r}
 mers$outcome2 <- recode(mers$outcome, "''='Unknown'; 'fatal'='Fatal'; 'recovered'='Recovered'; '?recovered'='Suspect_Recovered'; 'recovered?'='Suspect_Recovered'; '?fatal'='Suspect_Fatal'; 'fatal?'='Suspect_Fatal'")
@@ -172,4 +174,11 @@ finalthing <-ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) +
 ggplotly(finalthing) 
 ```
 
-This document -- and all the others used for this workshop -- were written in R/Markdown.
+
+
+## Summary 
+
+*KSA was most affected by MERS over the long term, with a relatively stable infectious period and mortality over almost the entirety of the epidemic duration (almost 4000 days). South Korea and the UAE saw small outbreaks but these were controlled over the course of roughly 1-2 years. The mortality rates in each country are difficult to determine as each had a high percentage of unknown outcome. However, South Korea saw the highest rate of recovery within their acute outbreak period. Overall, MERS has a moderate fatality rate and high enough infectivity to persist in these populations.*
+
+
+*This document -- and all the others used for this workshop -- were written in R/Markdown.
