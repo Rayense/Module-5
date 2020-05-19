@@ -1,8 +1,10 @@
 ---
-title: "Rayens Module 5"
+title: "Emily Rayens Module 5"
 author: "Emily Rayens"
-Date: "May 19, 2020"
+date: "May 19, 2020"
 output:
+  prettydoc::html_pretty:
+    theme: cayman
   html_document: default
   pdf_document: default
 ---
