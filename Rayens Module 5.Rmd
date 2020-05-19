@@ -1,6 +1,10 @@
 ---
 title: "Rayens Module 5"
-output: html_document
+author: "Emily Rayens"
+Date: "May 19, 2020"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -61,6 +65,10 @@ You should now have a "project" open. In the file explorer you should see the fi
 ```{r}
 library(ggplot2)
 library(lubridate)
+library(car)
+library(ggthemes)
+library(plotly)
+
 mers <- read.csv('cases.csv')
 
 
@@ -71,6 +79,7 @@ mers$hospitalized2 <- ymd(mers$hospitalized)
 class(mers$onset2)
 day0 <- min(na.omit(mers$onset2))
 mers$epi.day <- as.numeric(mers$onset2 - day0)
+
 ggplot(data=mers) + 
   geom_bar(mapping=aes(x=epi.day, fill=country)) +
   labs(x='Epidemic Day', y='Case Count', title='Global count of MERS cases',
@@ -81,9 +90,10 @@ ggplot(data=mers) +
 Now you have two files in your local directory that you don't have on the Github repository. To synchronize your local copy and the respository, you need to *Commit* the changes and then *Push* the changes to Github.
 
 **Exercise. To *commit* a change, navigate to the "Git" tab in the top right explorer window. You will see a list of files in your work directory. Select the files that need to be pushed to Github and click on "Commit". A dialog box will open. In the top right there is an editing window where you can register a comment describing the nature of the commit.**
-*I used GitKraken to push all changes to the master branch*
+*I used GitKraken to push all changes to the Github repository*
 
 **Exercise. Once you have committed one or more changes (and documented with comments), you need to *push* the changes to the archived version. To do this, click on "Push". You will need to enter your Github credentials in the dialog box that pops up. Now refresh the website for your project. The latest versions of your files should appear.**
+*I used GitKraken to push all changes to the Github repository*
 
 Github is very useful for collaboration. Multiple users can contribute code to the same project. Projects can be "branched" and "merged" and Github provides tools to identify and resolve conflicts when multiple programmers are working on the same project. Although it's fine to use the Github repository as the definitive version and create a new local copy (a new project) every time, you don't have to. Instead, you can leave your local working directory as it is and simply *pull* your collaborators contributions every time you start a new session.
 
@@ -109,6 +119,55 @@ In closing, we note that we have only scratched the surface of what can be done 
 
 **Exercise. Borrowing from your earlier exercises, prepare an analysis of the WNV or MERS data as a reproducible document using R/Markdown. Compile to a pdf (if your desktop in class is not compiling in PDF compile in HTML.**
 
+*In conducting a brief summary of the earlier analysis, we need to begin by recoding to simplify the outcomes and calculating the infectious period and coverting it into days.* 
+```{r}
+mers$outcome2 <- recode(mers$outcome, "''='Unknown'; 'fatal'='Fatal'; 'recovered'='Recovered'; '?recovered'='Suspect_Recovered'; 'recovered?'='Suspect_Recovered'; '?fatal'='Suspect_Fatal'; 'fatal?'='Suspect_Fatal'")
+
+mers$infectious.period <- mers$hospitalized2-mers$onset2 # calculate infectious period
+class(mers$infectious.period) # these data are class "difftime"
+mers$infectious.period <- as.numeric(mers$infectious.period, units = "days") # convert to days
+mers$infectious.period2 <- ifelse(mers$infectious.period<0,0,mers$infectious.period)
+```
+
+*We can then plot some overview figures of the infectious period in the MERS data*
+```{r}
+ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
+  geom_point(mapping = aes(color=country)) +
+  facet_grid(outcome2 ~ country) + 
+  scale_y_continuous(limits = c(0, 50)) +
+   theme(axis.text.x = element_text(angle = 90))+
+  scale_x_continuous(breaks=c(0, 1000, 2000))+
+   labs(x='Epidemic day', y='Infectious period',
+       title='MERS Infectious Period', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+```{r}
+ggplot(data=mers, color=country) + 
+  geom_violin(mapping = aes(x=epi.day, y=outcome2, color=country)) +
+   labs(x='Epidemic day', y='Outcome',
+       title='MERS Case Fatality Rate', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")+
+theme_solarized(light=FALSE) +
+ scale_colour_solarized('blue')
+```
+
+*We can simplify the violin plot of the infectious disease period of the major players in the MERS outbreak* 
+```{r}
+ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
+  geom_violin(mapping = aes(color=country)) +
+  scale_y_continuous(limits = c(0, 50)) +
+   labs(x='Epidemic day', y='Infectious period', title='MERS infectious period (positive values only) over time', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")+ 
+  theme_solarized(light=FALSE) +
+ scale_colour_solarized('blue')
+```
+
 **Exercise. Add an interactive plotly graph to your reproducible document. Compile to HTML.**
+*This is an interactive plot of the MERS Case Fatality Rate*
+```{r}
+finalthing <-ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
+  geom_violin(mapping = aes(color=country)) +
+  scale_y_continuous(limits = c(0, 50)) +
+   labs(x='Epidemic day', y='Infectious period', title='MERS infectious period (positive values only) over time', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+ggplotly(finalthing) 
+```
 
 This document -- and all the others used for this workshop -- were written in R/Markdown.

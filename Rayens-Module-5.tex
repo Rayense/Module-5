@@ -1,0 +1,587 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Rayens Module 5},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Rayens Module 5}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\hypertarget{project-management-for-reproducible-research}{%
+\subsection{Project management for reproducible
+research}\label{project-management-for-reproducible-research}}
+
+This exercise is about practical stuff -- managing scientific projects
+and workflows efficiently to avoid mistakes and keep the research moving
+forward.
+
+\hypertarget{learning-outcomes}{%
+\subsection{Learning outcomes}\label{learning-outcomes}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Keeping file structure
+\item
+  Version control
+\item
+  Create a data analysis workflow, reporting, and the writing of
+  scientific manuscripts
+\end{enumerate}
+
+\hypertarget{r-projects}{%
+\subsection{R Projects}\label{r-projects}}
+
+At this point, one might wonder how to keep track of all these files,
+datasets, and figures. The answer: R projects. An R project consists of
+a file in a project directory (with .Rproj extension) and the associated
+data, scripts, and other files. When an R project is opened the
+following occurs (from: \url{http://rstudio.com}):
+
+\begin{itemize}
+\tightlist
+\item
+  A new R session (process) is started
+\item
+  The .Rprofile file in the project's main directory (if any) is sourced
+  by R
+\item
+  The .RData file in the project's main directory is loaded (if project
+  options indicate that it should be loaded).
+\item
+  The .Rhistory file in the project's main directory is loaded into the
+  RStudio History pane (and used for Console Up/Down arrow command
+  history).
+\item
+  The current working directory is set to the project directory.
+\item
+  Previously edited source documents are restored into editor tabs
+\item
+  Other RStudio settings (e.g.~active tabs, splitter positions, etc.)
+  are restored to where they were the last time the project was closed.
+\end{itemize}
+
+\hypertarget{version-control-git-and-github}{%
+\subsection{Version control, Git, and
+Github}\label{version-control-git-and-github}}
+
+R projects are especially useful for \emph{version control}. Version
+control is software for managing changes to code, data, and the other
+files associated with a project. Version control facilitates undoing
+revisions to an arbitrary point in the history of a file and the clean
+synchronization of changes contributed by multiple users. \emph{Git} is
+a popular version control system that works well with R/RStudio through
+the Github repository service.
+
+Create a Github account:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Go to the Github website \url{http://github.com} and click on ``sign
+  up''.
+\item
+  Create a profile (username, email, password).
+\item
+  Click ``start a project''.
+\item
+  Verify email address.
+\item
+  Create a project using the provided form.
+\end{enumerate}
+
+Link Github account to R/RStudio:
+
+(There are lots of ways to link your installation of R with Github.
+These instructions are for use with R/Rstudio installed on a Windows
+computer such as in the teaching lab. Note that to use Github you also
+have to have Git installed on your computer.)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Open RStudio.
+\item
+  Select File -\textgreater{} New Project -\textgreater{} Version
+  Control -\textgreater{} Git.
+\item
+  Go to the website for the project you created and click the green
+  ``Clone or download'' button; copy the URL.
+\item
+  Paste the copied URL in the RStudio dialog box and navigate to the
+  directory where you would like your project to be cloned. This will
+  create a local copy of all the files associated with your project.
+\end{enumerate}
+
+You should now have a ``project'' open. In the file explorer you should
+see the file \texttt{README.md} (if you created one), an \texttt{.Rproj}
+file, and another file \texttt{.gitignore} (which, conveniently, you can
+ignore). To include files (e.g.~data, scripts) in the project, simply
+create or copy them into the directory. For instance:
+
+\textbf{Exercise. Copy the MERS data file \texttt{cases.csv} and paste
+it into your working directory.}
+
+\textbf{Exercise. Create a new script following the prototype we
+introduced. Your script should load the MERS data and make a plot.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     date
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggthemes)}
+\KeywordTok{library}\NormalTok{(plotly)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'plotly' was built under R version 3.6.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'plotly'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     last_plot
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:graphics':
+## 
+##     layout
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mers <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{'cases.csv'}\NormalTok{)}
+
+
+\NormalTok{mers}\OperatorTok{$}\NormalTok{hospitalized[}\DecValTok{890}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'2015-02-20'}\NormalTok{)}
+\NormalTok{mers <-}\StringTok{ }\NormalTok{mers[}\OperatorTok{-}\DecValTok{471}\NormalTok{,]}
+\NormalTok{mers}\OperatorTok{$}\NormalTok{onset2 <-}\StringTok{ }\KeywordTok{ymd}\NormalTok{(mers}\OperatorTok{$}\NormalTok{onset)}
+\NormalTok{mers}\OperatorTok{$}\NormalTok{hospitalized2 <-}\StringTok{ }\KeywordTok{ymd}\NormalTok{(mers}\OperatorTok{$}\NormalTok{hospitalized)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 5 failed to parse.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(mers}\OperatorTok{$}\NormalTok{onset2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Date"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{day0 <-}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(mers}\OperatorTok{$}\NormalTok{onset2))}
+\NormalTok{mers}\OperatorTok{$}\NormalTok{epi.day <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(mers}\OperatorTok{$}\NormalTok{onset2 }\OperatorTok{-}\StringTok{ }\NormalTok{day0)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mers) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{epi.day, }\DataTypeTok{fill=}\NormalTok{country)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Epidemic Day'}\NormalTok{, }\DataTypeTok{y=}\StringTok{'Case Count'}\NormalTok{, }\DataTypeTok{title=}\StringTok{'Global count of MERS cases'}\NormalTok{,}
+       \DataTypeTok{caption=}\StringTok{"Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 535 rows containing non-finite values (stat_count).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: position_stack requires non-overlapping x intervals
+\end{verbatim}
+
+\includegraphics{Rayens-Module-5_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+Now you have two files in your local directory that you don't have on
+the Github repository. To synchronize your local copy and the
+respository, you need to \emph{Commit} the changes and then \emph{Push}
+the changes to Github.
+
+\textbf{Exercise. To \emph{commit} a change, navigate to the ``Git'' tab
+in the top right explorer window. You will see a list of files in your
+work directory. Select the files that need to be pushed to Github and
+click on ``Commit''. A dialog box will open. In the top right there is
+an editing window where you can register a comment describing the nature
+of the commit.} \emph{I used GitKraken to push all changes to the Github
+repository}
+
+\textbf{Exercise. Once you have committed one or more changes (and
+documented with comments), you need to \emph{push} the changes to the
+archived version. To do this, click on ``Push''. You will need to enter
+your Github credentials in the dialog box that pops up. Now refresh the
+website for your project. The latest versions of your files should
+appear.} \emph{I used GitKraken to push all changes to the Github
+repository}
+
+Github is very useful for collaboration. Multiple users can contribute
+code to the same project. Projects can be ``branched'' and ``merged''
+and Github provides tools to identify and resolve conflicts when
+multiple programmers are working on the same project. Although it's fine
+to use the Github repository as the definitive version and create a new
+local copy (a new project) every time, you don't have to. Instead, you
+can leave your local working directory as it is and simply \emph{pull}
+your collaborators contributions every time you start a new session.
+
+\hypertarget{statistically-literate-programming-with-r-markdown}{%
+\subsection{Statistically literate programming with R
+Markdown}\label{statistically-literate-programming-with-r-markdown}}
+
+\emph{Literate programming} is a programming paradigm due to Linux
+founder Donald Knuth in which natural langauge explanations of a
+program's logic are interspersed with the code \emph{snippets} that
+actually perform the computation. \emph{Statistically literate
+programming} applies this paradigm to data analysis. Statistically
+literate programming is the idea that the thought process of the data
+analyst can be captured in a report that contains explanation and
+interpretation, the code used to perform an analysis, and the products
+of that analysis such as tables of data, quantities (e.g.~p-values) and
+graphs.
+
+There are a handful of ways that one can do statistically literate
+programming with R/RStudio. In this exercise, we will use R/Markdown and
+\texttt{knitr}. Markdown is a lightweight markup language that allows
+documents to be rendered in html and other formats (e.g.~pdf) with a
+minimum of special formatting. Knitr is a system for dynamic report
+generation in R. Both should already be installed on your computer.
+
+In general, a project developed with R/Markdown will consist of a
+markdown document (with extension \texttt{.Rmd}) and the compiled
+report. You should learn a little more about the functions of R/Markdown
+and knitr, but first we will engage in a little learning-by-doing.
+
+\textbf{Exercise. Create a basic R Markdown document. Go to File
+-\textgreater{} New File -\textgreater{} R Markdown. Enter a title and
+author into the dialog box. Select the desired default output format.
+Save the resulting, automatically generated file. To compile the
+document, click on ``Knit'' in the R Studio editor. Study the code and
+the resulting report.}
+
+You now know enough R programming that you should be able to discern
+what is commentary and what is code in the \texttt{.Rmd} document.
+First, notice that the \texttt{.Rmd} document begins with a header and
+how it is set off from the rest of the document with three hyphens at
+the start and end of the header. These are editable properties. Indeed,
+there are many more options that we could encode in the header, but do
+not need to bother with now.
+
+Next, observe that \emph{R chunks} begin with three back ticks and curly
+braces (with the argument ``r''). Everything within this section must be
+properly formatted R code. R code chunks are indicated in the editor
+window with a different background color. Notice that the third R code
+chunk includes code to generate a plot. The compiled document shows this
+code, but also the figure it produces! This is the beauty of
+statistically literate programming: it keeps the explanation, code, and
+results all together in a way that can be inspected and used both by the
+data analyst and by others who come later. Moreover, oif the data change
+(they get updated, there is a correction, the analyst decides to look at
+a particular subset of the data), all that is required to generate a new
+report is to recompile the document.
+
+Finally, notice that natural language explanation is interspersed with
+the code chunks. These chunks don't require any special designation
+(like the hyphens for the header or the back ticks for the R code), but
+are basically just ``everything else''. This natural language commentary
+can nonetheless be ``marked up'' with special symbols that cause the
+formatted document to display sections titles, bold face or italics,
+clickable URLs, etc. In fact, the Markdown markup language enables quite
+a lot of reasonably sophisticated typesetting.
+
+In closing, we note that we have only scratched the surface of what can
+be done with R/Markdown and knitr.
+
+\textbf{Exercise. Visit the \href{http://rmarkdown.rstudio.com/}{R
+Markdown website} and look around. Especially, read through the
+\href{http://rmarkdown.rstudio.com/authoring_basics.html}{Authoring
+Basics}.}
+
+\textbf{Exercise. Borrowing from your earlier exercises, prepare an
+analysis of the WNV or MERS data as a reproducible document using
+R/Markdown. Compile to a pdf (if your desktop in class is not compiling
+in PDF compile in HTML.}
+
+\emph{In conducting a brief summary of the earlier analysis, we need to
+begin by recoding to simplify the outcomes and calculating the
+infectious period and coverting it into days.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mers}\OperatorTok{$}\NormalTok{outcome2 <-}\StringTok{ }\KeywordTok{recode}\NormalTok{(mers}\OperatorTok{$}\NormalTok{outcome, }\StringTok{"''='Unknown'; 'fatal'='Fatal'; 'recovered'='Recovered'; '?recovered'='Suspect_Recovered'; 'recovered?'='Suspect_Recovered'; '?fatal'='Suspect_Fatal'; 'fatal?'='Suspect_Fatal'"}\NormalTok{)}
+
+\NormalTok{mers}\OperatorTok{$}\NormalTok{infectious.period <-}\StringTok{ }\NormalTok{mers}\OperatorTok{$}\NormalTok{hospitalized2}\OperatorTok{-}\NormalTok{mers}\OperatorTok{$}\NormalTok{onset2 }\CommentTok{# calculate infectious period}
+\KeywordTok{class}\NormalTok{(mers}\OperatorTok{$}\NormalTok{infectious.period) }\CommentTok{# these data are class "difftime"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "difftime"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mers}\OperatorTok{$}\NormalTok{infectious.period <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(mers}\OperatorTok{$}\NormalTok{infectious.period, }\DataTypeTok{units =} \StringTok{"days"}\NormalTok{) }\CommentTok{# convert to days}
+\NormalTok{mers}\OperatorTok{$}\NormalTok{infectious.period2 <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(mers}\OperatorTok{$}\NormalTok{infectious.period}\OperatorTok{<}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,mers}\OperatorTok{$}\NormalTok{infectious.period)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{We can then plot some overview figures of the infectious period in
+the MERS data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mers, }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{epi.day, }\DataTypeTok{y=}\NormalTok{infectious.period2)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{country)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(outcome2 }\OperatorTok{~}\StringTok{ }\NormalTok{country) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1000}\NormalTok{, }\DecValTok{2000}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Epidemic day'}\NormalTok{, }\DataTypeTok{y=}\StringTok{'Infectious period'}\NormalTok{,}
+       \DataTypeTok{title=}\StringTok{'MERS Infectious Period'}\NormalTok{, }\DataTypeTok{caption=}\StringTok{"Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 728 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{Rayens-Module-5_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mers, }\DataTypeTok{color=}\NormalTok{country) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{epi.day, }\DataTypeTok{y=}\NormalTok{outcome2, }\DataTypeTok{color=}\NormalTok{country)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Epidemic day'}\NormalTok{, }\DataTypeTok{y=}\StringTok{'Outcome'}\NormalTok{,}
+       \DataTypeTok{title=}\StringTok{'MERS Case Fatality Rate'}\NormalTok{, }\DataTypeTok{caption=}\StringTok{"Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 535 rows containing non-finite values (stat_ydensity).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: position_dodge requires non-overlapping x intervals
+\end{verbatim}
+
+\includegraphics{Rayens-Module-5_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\emph{We can simplify the violin plot of the infectious disease period
+of the major players in the MERS outbreak}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mers, }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{epi.day, }\DataTypeTok{y=}\NormalTok{infectious.period2)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{country)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Epidemic day'}\NormalTok{, }\DataTypeTok{y=}\StringTok{'Infectious period'}\NormalTok{, }\DataTypeTok{title=}\StringTok{'MERS infectious period (positive values only) over time'}\NormalTok{, }\DataTypeTok{caption=}\StringTok{"Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv"}\NormalTok{)  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_fivethirtyeight}\NormalTok{()}\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme_fivethirtyeight}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 728 rows containing non-finite values (stat_ydensity).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: position_dodge requires non-overlapping x intervals
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: This manual palette can handle a maximum of 3 values. You have
+## supplied 8.
+\end{verbatim}
+
+\includegraphics{Rayens-Module-5_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\textbf{Exercise. Add an interactive plotly graph to your reproducible
+document. Compile to HTML.} \emph{This is an interactive plot of the
+MERS Case Fatality Rate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{finalthing <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mers, }\DataTypeTok{color=}\NormalTok{country) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{epi.day, }\DataTypeTok{y=}\NormalTok{outcome2, }\DataTypeTok{color=}\NormalTok{country)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Epidemic day'}\NormalTok{, }\DataTypeTok{y=}\StringTok{'Outcome'}\NormalTok{,}
+       \DataTypeTok{title=}\StringTok{'MERS Case Fatality Rate'}\NormalTok{, }\DataTypeTok{caption=}\StringTok{"Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv"}\NormalTok{)}
+\KeywordTok{ggplotly}\NormalTok{(finalthing)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 535 rows containing non-finite values (stat_ydensity).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: position_dodge requires non-overlapping x intervals
+\end{verbatim}
+
+\includegraphics{Rayens-Module-5_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+This document -- and all the others used for this workshop -- were
+written in R/Markdown.
+
+
+\end{document}
